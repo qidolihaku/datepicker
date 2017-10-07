@@ -1,0 +1,177 @@
+@import './global.less';
+@import './arrow.less';
+
+@rootBG: #F0EEEF;
+@date-highlight: #cbcdcc;
+@selectedBG: #525252;
+
+@date-size: 35px;
+@date-border-width: 4px;
+@text-color: #525252;
+@hoverBorderColor: #525252;
+@disabledTextColor: #999;
+@disabledBG:   #cfcfcf;
+
+@arrow_size : 5px;
+
+
+.universal-datepicker {
+    font-family: "Droid Sans";
+    color: #525252;
+    position:absolute;
+    margin: 0 auto;
+    min-width: 400px;
+    background-color: @rootBG;
+    border-radius: 2px;
+
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    opacity: 0;
+    visibility: hidden;
+
+    &.show {
+        opacity: 1;
+      visibility: visible;
+    }
+
+    .date-picker-pointer {
+        #arrow > .top(17px, @rootBG, 0, 0);
+        position: absolute;
+    }
+
+
+    .datepicker-title {
+        width: 100%;
+        height: 20px;
+        padding: 20px 20px 0;
+        span {
+            font-size: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+    }
+
+    &.calendar {
+        //position: relative;
+        padding: 20px;
+
+        .calendar-arrow {
+            width: 20px;
+            height: 20px;
+            background: red;
+            position: absolute;
+            cursor: pointer;
+            //top: 30px;
+            &.disabled {
+                background: grey;
+            }
+            &.previous {
+                left: 30px;
+            }
+            
+            &.next {
+                right: 30px;
+            }
+        }
+
+        .month{
+            min-width: 320px;
+            min-height: 320px;
+            display: inline-block;
+            background: transparent;
+
+            .month-header {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+                span {
+                    height: 18px;
+                    font-size: 18px;
+                    font-weight: normal;
+                }
+            }
+
+            .week-header {
+                margin-bottom: 10px;
+                .week-title {
+                    font-size: 9px;
+                    line-height: 35px;
+                    width: @date-size;
+                    display: table-cell;
+                    text-align: center;
+                    border-right: @date-border-width solid @rootBG;
+                }
+            }
+
+            .week {
+                background: transparent;
+                margin: 5px ;
+
+                .day {
+                    margin-top:10px;
+                    font-family: "Myriad Pro";
+                    font-size: 18px;
+                    color: @text-color;
+                    width: @date-size;
+                    height: @date-size;
+                    line-height: @date-size;
+                    text-align: center;
+                    display: table-cell;
+                    background-color: white;
+                    cursor: pointer;
+
+                    &:last-child {
+                        border-right: none;
+                    }
+
+                    &.empty {
+                        visibility: hidden;
+                    }
+
+                    &.hover {
+                        //border: 1px solid @hoverBorderColor; 
+                        box-shadow:inset 0px 0px 0px 1px @hoverBorderColor;
+                    }
+
+                    &.today {
+                        font-weight: bold;
+                    }
+
+                    &.disabled {
+                        box-shadow:inset 0px 0px 0px 0px @disabledBG;
+                        color: @disabledTextColor;
+                    }
+                    &.disallowed {
+                        background-color: #660000;
+                    }
+                    &.from, &.to  {
+                      background-color: #E8E8E8;
+                    }
+                    &.selected {
+                        position: relative;
+                        background-color: @text-color;
+                        color: white;
+                        border-right: @date-border-width solid @selectedBG;
+
+                        &.from  {
+                            #arrow > .right(@arrow_size, @selectedBG,5px,@selectedBG); 
+                        }
+
+                        &.to {
+                            #arrow > .left(5px, @selectedBG, 0px, @selectedBG);
+                        }
+                    }
+
+                    &.highlight {
+                        background-color: #cbcdcc;
+                        border-right: solid @date-border-width @date-highlight;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
