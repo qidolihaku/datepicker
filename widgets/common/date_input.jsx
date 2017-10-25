@@ -56,7 +56,7 @@ class DateInput extends React.Component {
         this.setState({focused: true})
     }
 
-    componentDidUpdate(prevProps) {
+    componentWillUpdate(prevProps) {
         if (this.state.value !== prevProps.value) {
             this.setState({value: prevProps.value})
         }

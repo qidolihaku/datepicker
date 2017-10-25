@@ -58,9 +58,9 @@ export class Calendar extends Component
 
 function mapStateToProps(state, ownProps) {
     return  {
-        datesTable: state.calendar.calendarTables.dates,
-        monthsTable: state.calendar.calendarTables.months,
-        isVisible: state.calendar.isVisible,
+        datesTable: state.calendarTables.dates,
+        monthsTable: state.calendarTables.months,
+        isVisible: state.isVisible,
     };
 }
 

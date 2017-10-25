@@ -92,18 +92,21 @@ export class RootContainer extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener('click', this.handleClick.bind(this), false);
-
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_isEqual(this.props.selection, nextProps.selection) && !_isEmpty(nextProps.selection)) {
+        console.log('componentWillReceiveProps')
+        if (!_isEqual(this.state.selection, nextProps.selection)) {
             this.setState({selection: nextProps.selection})
         }
+    }
 
+    componentWillUpdate(nextProps, nextState) {
+
+        console.log('componentWillUpdate')
         if (this.state.inputIndex !== nextProps.inputIndex) {
             const currentInput = this.refs[`input-${nextProps.inputIndex}`];
             if(!currentInput.isFocused()) {
-                console.log('inputindex changed')
                 currentInput.focus();
                 this.setState({inputIndex: nextProps.inputIndex})
             }
@@ -150,9 +153,9 @@ export class RootContainer extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     let states = {
-        isVisible: state.calendar.isVisible,
-        selection: state.calendar.selection,
-        inputIndex: state.calendar.inputIndex,
+        isVisible: state.isVisible,
+        selection: state.selection,
+        inputIndex: state.inputIndex,
     };
     return states;
 }

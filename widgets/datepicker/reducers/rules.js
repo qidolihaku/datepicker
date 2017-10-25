@@ -56,15 +56,17 @@ export const Rules = {
             const max = state.config.maxSelectRange;
 
             state.calendarTables.dates.forEach((day, idx, datesTable) => {
-                if(day.status[DayStatus.DISABLED]) return;
+                if (day.status[ DayStatus.DISABLED ]) return;
                 if (isBefore(day.date, from)
                     || isBefore(day.date, addDays(from, min))
                     || isAfter(day.date, addDays(from, max))
                 ) {
-                    datesTable[ idx ] = update(day, {status: {
-                        [DayStatus.DISALLOWED]: {$set: true},
-                        [DayStatus.DISABLED] : {$set: true}
-                    }});
+                    datesTable[ idx ] = update(day, {
+                        status: {
+                            [DayStatus.DISALLOWED]: {$set: true},
+                            [DayStatus.DISABLED]: {$set: true}
+                        }
+                    });
                 }
             });
             return state;
@@ -77,19 +79,26 @@ export const Rules = {
         let endDate = addDays(state.config.calendarEndDate, 1);
 
         let days = state.calendarTables.dates.map((day) => {
-            let dayObj = update(day, {status: {$set: {day: true}}})
+            //let dayObj = update(day, {status: {$set: {day: true}}});
+            let dayObj = {...day, status: {day: true}};
             switch (true) {
                 case dayObj.date === null:
                     dayObj.status[ DayStatus.EMPTY ] = true;
                     break;
-                case isSameDay(dayObj.date, state.selection[0]):
-                    dayObj.status[DayStatus.RANGE_START]  = true;
+                case isSameDay(dayObj.date, state.selection[ 0 ]):
+                    dayObj.status[ DayStatus.RANGE_START ] = true;
                     break;
-                case isSameDay(dayObj.date, state.selection[1]):
-                    dayObj.status[DayStatus.RANGE_END]  = true;
+                case isSameDay(dayObj.date, state.selection[ 1 ]):
+                    dayObj.status[ DayStatus.RANGE_END ] = true;
                     break;
                 case !isWithinRange(dayObj.date, startDate, endDate):
-                    dayObj.status[DayStatus.DISABLED] = true;
+                    dayObj.status[ DayStatus.DISABLED ] = true;
+                    break;
+                default:
+                    if (state.selection[ 0 ] && state.selection[ 1 ] &&
+                        isWithinRange(dayObj.date, state.selection[ 0 ], state.selection[ 1 ])) {
+                        dayObj.status[ DayStatus.HIGHLIGHT ] = true;
+                    }
                     break;
             }
 

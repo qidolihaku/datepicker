@@ -21,23 +21,25 @@ export const setSelection = selection => ({
 });
 
 
-export const rangeSelect = (date) => (dispatch, getStore) => {
-    dispatch({
-        type: RANGE_SELECT,
-        date: date,
-    });
+// export const rangeSelect = (date) => (dispatch, getStore) => {
+//     dispatch({
+//         type: RANGE_SELECT,
+//         date: date,
+//     });
+//
+//     dispatch({type: UPDATE_CALENDAR});
+// };
 
-    dispatch({type: UPDATE_STYLING});
-};
+export const rangeSelect = date => ({
+    type: RANGE_SELECT,
+    date: date
+});
 
-export const openCalendar = (inputIndex) => dispatch => {
-    dispatch({
+export const openCalendar = (inputIndex) => ({
         type: OPEN_CALENDAR,
         inputIndex: inputIndex
-    });
+});
 
-    dispatch(updateCalendar());
-};
 
 export const closeCalendar = () => ({
     type: CLOSE_CALENDAR
@@ -50,14 +52,11 @@ export const TAB_DIRECTION ={
 };
 
 
-export const switchInput = (idx) => dispatch => {
-    dispatch({
-        type: SWITCH_INPUT,
-        index: idx
-    });
+export const switchInput = (idx) => ({
+    type: SWITCH_INPUT,
+    index: idx
+});
 
-    dispatch({type: UPDATE_STYLING});
-};
 
 export const ARROW_KEYS = {
     up: 'ArrowUp',
@@ -66,13 +65,9 @@ export const ARROW_KEYS = {
     right: 'ArrowRight',
 };
 
-export const moveCursor = (direction) => dispatch => {
-    dispatch({
-        type: MOVE_CURSOR,
-        step: direction
-    });
-
-    dispatch({type: UPDATE_STYLING});
-};
+export const moveCursor = (direction) => ({
+    type: MOVE_CURSOR,
+    step: direction
+});
 
 

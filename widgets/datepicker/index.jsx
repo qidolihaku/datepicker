@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import configStore from './store/configure_store';
 import addDays from 'date-fns/add_days';
 import RootContainer from './containers/root';
+import update from 'immutability-helper';
 
 const calendarInitState = {
     isVisible: false,
     config: {},
     selection: [],
     inputIndex: 0,
-    currentDate: new Date(),
+    currentMonth: new Date(),
+    startDate: new Date(),
+    endDate: null,
     calendarTables: {
     }
 };
@@ -65,8 +68,14 @@ class DatePicker extends React.Component {
 
     constructor(props) {
         super(props);
-        calendarInitState.config = Object.assign({},props);
-        this.store = configStore({calendar: calendarInitState});
+        calendarInitState.config = {...props};
+
+        const startDate = addDays(new Date(), props.advancedDays);
+        const endDate = addDays(startDate, props.maxSelectRange);
+
+        const state = {...calendarInitState, startDate, endDate, focusDate : startDate};
+
+        this.store = configStore(state);
     }
 
     render() {
