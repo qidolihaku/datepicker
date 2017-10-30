@@ -1,9 +1,7 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import DatePicker from './widgets/datepicker/index';
-import DateInput from './widgets/common/date_input';
-
-
+import DatePicker from './components/datepicker/index.jsx';
+import DateInput from './components/common/date_input';
 
 
 

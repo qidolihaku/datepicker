@@ -4,6 +4,7 @@
  */
 
 
+
 module.exports = function (config) {
     config.set({
 
@@ -18,8 +19,8 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: 'widgets/**/*.js?', included: false},
-            {pattern: 'widgets/**/*_spec.js', included: true},
+            {pattern: 'components/**/*.js?', included: false},
+            {pattern: 'components/**/*_spec.js', included: true},
             {pattern: '**/*.map', included: false}
         ],
 
@@ -35,8 +36,8 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'widgets/**/*.js?': [ 'webpack', ],
-            'widgets/**/*_spec.js': ['webpack'],
+            'components/**/*.js?': [ 'webpack', 'sourcemap' ],
+            'components/**/*_spec.js': ['webpack'],
         },
         webpackMiddleware: {
             noInfo: true,
@@ -47,25 +48,23 @@ module.exports = function (config) {
             resolve: {
                 extensions: ['.js', '.jsx']
             },
-            //webpack configuration
-
             module: {
                 rules: [
                     {
                         test: /\.js$|\.jsx$/,
-                        use: [{
-                            loader: "babel-loader",
-                            options: {
-                                presets: ['react',['es2015', {module: true}]],
-                                plugins: [
-                                    "transform-class-properties",
-                                    "transform-es2015-parameters",
-                                    "transform-object-rest-spread",
-                                    "lodash"
-                                ]
-                            }
-                        }],
+                        loader: "babel-loader",
+                        options: {
+                            presets: ['react', ['es2015', {module: true}]],
+                            plugins: [
+                                "transform-class-properties",
+                                "transform-es2015-parameters",
+                                "transform-object-rest-spread",
+                                "transform-es2015-computed-properties",
+                                "transform-es2015-spread"
+                            ]
+                        },
                         exclude: /node_modules/,
+
                     },
                     {
                         test: /\.js$|\.jsx$/,
@@ -77,7 +76,6 @@ module.exports = function (config) {
                 ]
             }
         },
-
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
